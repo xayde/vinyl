@@ -1,7 +1,7 @@
 package com.vinylstore.vinyl.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
@@ -13,11 +13,16 @@ import javax.persistence.Table;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
+//@AllArgsConstructor
 @Table(name = "role")
 public class Role {
+    public static final Role  USER = new Role(1,"user");
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String name;
+
+    public Role(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }
