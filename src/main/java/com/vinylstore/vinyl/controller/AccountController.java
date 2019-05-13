@@ -24,18 +24,11 @@ public class AccountController {
     public ResponseEntity<?> addNewAccount(@RequestBody AccountCreationDto accountCreationDTO) {
 
         if (accountCreationDTO == null) {
-            return new ResponseEntity<>("",HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
         }
 
         accountService.createAccount(accountCreationMapper.accountCreationDtoToAccount(accountCreationDTO));
 
         return new ResponseEntity<>("Account has been successfully created", HttpStatus.OK);
     }
-
-        /*@GetMapping(path = "/all")
-        public @ResponseBody
-        Iterable<Account> getAllAccounts() {
-            return accountDao.findAll();
-        }*/
-
 }
