@@ -1,5 +1,6 @@
 package com.vinylstore.vinyl.model;
 
+import com.vinylstore.vinyl.listener.AccountListener;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -28,7 +29,7 @@ import java.util.Date;
 @Setter
 @ToString
 @NoArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
+@EntityListeners({AuditingEntityListener.class, AccountListener.class})
 @Table(name = "account")
 public class Account {
     @Id
