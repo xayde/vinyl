@@ -7,4 +7,5 @@ import org.springframework.stereotype.Service;
 public interface AccountService {
 
     void createAccount(Account account);
+    Account findByEmail(String email);
 }

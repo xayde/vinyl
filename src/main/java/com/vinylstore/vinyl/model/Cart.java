@@ -1,9 +1,11 @@
 package com.vinylstore.vinyl.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -16,12 +18,12 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "cart")
 public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy="cart")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy="cart", cascade = CascadeType.ALL)
     private List<CartItem> cartItem;
 }

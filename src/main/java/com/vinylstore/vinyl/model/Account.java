@@ -13,14 +13,16 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
-import javax.persistence.FetchType;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
 @Entity
@@ -32,15 +34,20 @@ import java.util.Date;
 @Table(name = "account")
 public class Account {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", unique = true, nullable = false)
     private Integer id;
+    @NotEmpty(message = "Firstname cannot be null or empty")
     @Column(name = "first_name", nullable = false)
     private String firstName;
+    @NotEmpty(message = "Lastname cannot be null or empty")
     @Column(name = "last_name")
     private String lastName;
+    @NotEmpty(message = "Email cannot be null or empty")
+    @Email
     @Column(name = "email", unique = true, nullable = false)
     private String email;
+    @NotEmpty(message = "Password cannot be null or empty")
     @Column(name = "password")
     private String password;
     @Column(name = "confirmation_key")
@@ -57,6 +64,7 @@ public class Account {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cart_id", referencedColumnName = "id")
     private Cart cart;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Role role = Role.USER;
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "role")
+    private Role role;
 }
