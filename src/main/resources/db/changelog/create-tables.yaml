@@ -1,0 +1,66 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1 - create role table
+      author: root
+      changes:
+      - createTable:
+          columns:
+          - column:
+              name: id
+              type: int
+          - column:
+              name: name
+              type: varchar(255)
+          schemaName: vinyl
+          tableName: role
+      - addPrimaryKey:
+          columnNames: id
+          constraintName: pk_role
+          schemaName: vinyl
+          tableName: role
+  - changeSet:
+      id: 2 - create account table
+      author: root
+      changes:
+      - createTable:
+          columns:
+          - column:
+              name: id
+              type: int
+          - column:
+              name: first_name
+              type: varchar(255)
+          - column:
+              name: last_name
+              type: varchar(255)
+          - column:
+              name: email
+              type: varchar(255)
+          - column:
+              name: password
+              type: varchar(255)
+          - column:
+              name: confirmation_key
+              type: varchar(255)
+          - column:
+              name: created_at
+              type: datetime
+          - column:
+              name: updated_at
+              type: datetime
+          - column:
+              name: role_id
+              type: int
+          schemaName: vinyl
+          tableName: account
+      - addPrimaryKey:
+          columnNames: id
+          constraintName: pk_account
+          schemaName: vinyl
+          tableName: account
+      - addForeignKeyConstraint:
+            baseColumnNames: role_id
+            baseTableName: account
+            constraintName: fk_account_role
+            referencedColumnNames: id
+            referencedTableName: role

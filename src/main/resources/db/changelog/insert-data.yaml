@@ -1,0 +1,10 @@
+databaseChangeLog:
+- changeSet:
+    id: 1 - create role table
+    author: root
+    changes:
+    - sql:
+        dbms: mysql
+        splitStatements: true
+        sql: insert into role (id, name) values (1, 'role')
+        stripComments: true
