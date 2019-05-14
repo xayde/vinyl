@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -66,6 +65,5 @@ public class Account {
     @JoinColumn(name = "cart_id", referencedColumnName = "id")
     private Cart cart;
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "role")
-    private Role role;
+    private Role role = Role.USER;
 }
