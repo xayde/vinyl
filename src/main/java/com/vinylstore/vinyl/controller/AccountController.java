@@ -20,7 +20,7 @@ public class AccountController {
     @Autowired
     private AccountCreationMapper accountCreationMapper;
 
-    @PostMapping(path = "/users", produces = "application/json")
+    @PostMapping(path = "/users", consumes = "application/json")
     public ResponseEntity<?> addNewAccount(@RequestBody AccountCreationDto accountCreationDTO) {
 
         if (accountCreationDTO == null) {
@@ -29,6 +29,6 @@ public class AccountController {
 
         accountService.createAccount(accountCreationMapper.accountCreationDtoToAccount(accountCreationDTO));
 
-        return new ResponseEntity<>("Account has been successfully created", HttpStatus.OK);
+        return new ResponseEntity<>("Account has been successfully created", HttpStatus.CREATED);
     }
 }
