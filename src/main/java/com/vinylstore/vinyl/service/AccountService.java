@@ -10,4 +10,5 @@ public interface AccountService {
 
     void createAccount(Account account);
     List<Account> getAllAccounts();
+    Account findByEmail(String email);
 }
