@@ -6,27 +6,30 @@ import com.vinylstore.vinyl.exception.UniqueEmailException;
 import com.vinylstore.vinyl.model.Account;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-
+@RunWith(MockitoJUnitRunner.class)
 public class AccountServiceTest {
     private AccountServiceImpl sut;
+    @Mock
     private AccountDao accountDao;
+    @Mock
+    private Account account;
 
     @Before
     public void setUp() {
-        accountDao = mock(AccountDao.class);
         sut = new AccountServiceImpl(accountDao);
     }
 
     @Test(expected = UniqueEmailException.class)
     public void uniqueEmailConstraintTest() {
-        String email = "test@gmail.com";
-        when(accountDao.findByEmail(email)).thenReturn(mock(Account.class));
+        String email = "test1@gmail.com";
+        when(accountDao.findByEmail(email)).thenReturn(account);
 
-        Account account = mock(Account.class);
         when(account.getEmail()).thenReturn(email);
 
         sut.createAccount(account);

@@ -18,7 +18,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public void createAccount(Account account) {
         if (findByEmail(account.getEmail().trim()) != null) {
-            throw new UniqueEmailException();
+            throw new UniqueEmailException("Email address already exists.");
         }
         accountDao.save(account);
     }
