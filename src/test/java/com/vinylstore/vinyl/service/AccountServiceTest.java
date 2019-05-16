@@ -11,7 +11,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 
-public class AccountServiceImplTest {
+public class AccountServiceTest {
     private AccountServiceImpl sut;
     private AccountDao accountDao;
 
