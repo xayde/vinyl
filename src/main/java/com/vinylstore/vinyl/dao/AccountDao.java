@@ -11,4 +11,5 @@ import org.springframework.stereotype.Repository;
 public interface AccountDao extends CrudRepository<Account, Integer> {
     @Query("select a from Account a where a.email = ?1")
     Account findByEmail(String email);
+    Account findAccountById(Integer id);
 }
