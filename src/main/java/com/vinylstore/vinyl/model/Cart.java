@@ -18,7 +18,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "cart")
 public class Cart {
     @Id

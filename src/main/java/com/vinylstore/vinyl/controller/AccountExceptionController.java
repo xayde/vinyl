@@ -1,5 +1,6 @@
 package com.vinylstore.vinyl.controller;
 
+import com.vinylstore.vinyl.exception.EmailOrPasswordNotExistsException;
 import com.vinylstore.vinyl.exception.UniqueEmailException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,11 @@ public class AccountExceptionController {
         } else {
             return new ResponseEntity(t.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @ExceptionHandler(value = EmailOrPasswordNotExistsException.class)
+    public ResponseEntity<Object> handleEmailOrPasswordExistence(final EmailOrPasswordNotExistsException exception) {
+        return new ResponseEntity<>("Email or password does not exist", HttpStatus.BAD_REQUEST);
     }
 }
 
