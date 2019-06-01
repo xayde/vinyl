@@ -15,7 +15,7 @@ import java.util.Date;
 public class AccountExceptionHandler {
     @ExceptionHandler(value = UniqueEmailException.class)
     public ResponseEntity<Object> handleUniqueEmailConstraint(final UniqueEmailException exception) {
-        ErrorResponse errorResponse = new ErrorResponse(new Date(), exception.getMessage());
+        ErrorResponse errorResponse = new ErrorResponse(exception.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
     }
 
@@ -24,10 +24,10 @@ public class AccountExceptionHandler {
         ErrorResponse errorResponse;
         Throwable t = exception.getOriginalException().getCause();
         if (t instanceof ConstraintViolationException) {
-            errorResponse = new ErrorResponse(new Date(), ((ConstraintViolationException) t).getConstraintViolations().iterator().next().getMessage());
+            errorResponse = new ErrorResponse(((ConstraintViolationException) t).getConstraintViolations().iterator().next().getMessage());
             return new ResponseEntity(errorResponse, HttpStatus.BAD_REQUEST);
         } else {
-            errorResponse = new ErrorResponse(new Date(), t.getMessage());
+            errorResponse = new ErrorResponse(t.getMessage());
             return new ResponseEntity(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
