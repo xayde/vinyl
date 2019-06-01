@@ -5,21 +5,24 @@ import com.vinylstore.vinyl.exception.EmailOrPasswordNotExistsException;
 import com.vinylstore.vinyl.exception.PasswordDoesNotMatchException;
 import com.vinylstore.vinyl.exception.UniqueEmailException;
 import com.vinylstore.vinyl.model.Account;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+
+@RequiredArgsConstructor
 @Service
 public class AccountServiceImpl implements AccountService {
     @Autowired
-    private AccountDao accountDao;
-    @Autowired
     private PasswordEncoder passwordEncoder;
+
+    private final AccountDao accountDao;
 
     @Override
     public void createAccount(Account account) {
         if (getAccountByEmail(account.getEmail().trim()) != null) {
-            throw new UniqueEmailException();
+            throw new UniqueEmailException("Email address already exists.");
         }
         accountDao.save(account);
     }
@@ -47,6 +50,4 @@ public class AccountServiceImpl implements AccountService {
     public Account getAccountByUserId(Integer userId) {
         return accountDao.findAccountById(userId);
     }
-
-
 }
