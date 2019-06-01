@@ -1,22 +1,24 @@
 package com.vinylstore.vinyl.service;
 
 import com.vinylstore.vinyl.dao.AccountDao;
-import com.vinylstore.vinyl.dto.AccountCreationDto;
 import com.vinylstore.vinyl.exception.UniqueEmailException;
-import com.vinylstore.vinyl.mapper.AccountCreationMapper;
 import com.vinylstore.vinyl.model.Account;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.glassfish.jersey.internal.guava.Lists;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+@RequiredArgsConstructor
 @Service
 public class AccountServiceImpl implements AccountService {
-    @Autowired
-    private AccountDao accountDao;
+
+    private final AccountDao accountDao;
 
     @Override
     public void createAccount(Account account) {
         if (findByEmail(account.getEmail().trim()) != null) {
-            throw new UniqueEmailException();
+            throw new UniqueEmailException("Email address already exists.");
         }
         accountDao.save(account);
     }
@@ -24,5 +26,10 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Account findByEmail(String email) {
         return accountDao.findByEmail(email);
+    }
+
+    @Override
+    public List<Account> getAllAccounts() {
+        return Lists.newArrayList(accountDao.findAll());
     }
 }
