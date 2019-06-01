@@ -35,15 +35,14 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public void deleteAccount(Integer userId, String email, String password) {
         Account account = getAccountByUserId(userId);
-        if (account != null && account.getEmail().equalsIgnoreCase(email)) {
-            if (passwordEncoder.matches(password, account.getPassword())) {
-                accountDao.deleteById(userId);
-            } else {
-                throw new PasswordDoesNotMatchException("Email address or/and password are invalid");
-            }
-        } else {
-            throw new EmailOrPasswordNotExistsException("Email address or/and password are invalid");
+
+        if (account == null || !account.getEmail().equalsIgnoreCase(email)) {
+            throw new EmailOrPasswordNotExistsException("Email does not exist!");
         }
+        if (!passwordEncoder.matches(password, account.getPassword())) {
+            throw new PasswordDoesNotMatchException("Password does not match!");
+        }
+        accountDao.deleteById(userId);
     }
 
     @Override
